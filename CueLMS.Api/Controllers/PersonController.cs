@@ -1,4 +1,5 @@
-﻿using Library.LMS.Models;
+﻿using CueLMS.Api.EC;
+using Library.LMS.Models;
 using Microsoft.AspNetCore.Mvc;
 using UWP.Library.CueLMS.Database;
 
@@ -18,7 +19,7 @@ namespace CueLMS.Api.Controllers
         [HttpGet]
         public List<Person> Get()
         {
-            return DatabaseContext.People;
+            return new PersonEC().GetPeople();
         }
 
     }
