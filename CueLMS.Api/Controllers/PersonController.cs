@@ -22,5 +22,11 @@ namespace CueLMS.Api.Controllers
             return new PersonEC().GetPeople();
         }
 
+        [HttpPost]
+        public Person AddOrUpdate([FromBody] Person person)
+        {
+            return new PersonEC().AddOrUpdatePerson(person);
+        }
+
     }
 }

@@ -9,5 +9,11 @@ namespace CueLMS.Api.EC
         {
             return DatabaseContext.People;
         }
+
+        public Person AddOrUpdatePerson(Person p)
+        {
+            DatabaseContext.People.Add(p);
+            return p;
+        }
     }
 }
