@@ -12,7 +12,20 @@ namespace CueLMS.Api.EC
 
         public Person AddOrUpdatePerson(Person p)
         {
-            DatabaseContext.People.Add(p);
+            if (p.IdNumber > 0)
+            {
+                var itemToUpdate = DatabaseContext.People.FirstOrDefault(x => x.IdNumber == p.IdNumber);
+                if (itemToUpdate != null) 
+                {
+                    DatabaseContext.People.Remove(itemToUpdate); 
+                    DatabaseContext.People.Add(p);
+                }
+            }else
+            {
+                var lastId = DatabaseContext.People.Select(x => x.IdNumber).Max();
+                p.IdNumber = ++lastId;
+                DatabaseContext.People.Add(p);
+            }
             return p;
         }
     }
