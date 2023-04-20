@@ -7,24 +7,24 @@ namespace CueLMS.Api.EC
     {
         public List<Person> GetPeople()
         {
-            return DatabaseContext.People;
+            return FakeDatabaseContext.People;
         }
 
         public Person AddOrUpdatePerson(Person p)
         {
             if (p.IdNumber > 0)
             {
-                var itemToUpdate = DatabaseContext.People.FirstOrDefault(x => x.IdNumber == p.IdNumber);
+                var itemToUpdate = FakeDatabaseContext.People.FirstOrDefault(x => x.IdNumber == p.IdNumber);
                 if (itemToUpdate != null) 
                 {
-                    DatabaseContext.People.Remove(itemToUpdate); 
-                    DatabaseContext.People.Add(p);
+                    FakeDatabaseContext.People.Remove(itemToUpdate); 
+                    FakeDatabaseContext.People.Add(p);
                 }
             }else
             {
-                var lastId = DatabaseContext.People.Select(x => x.IdNumber).Max();
+                var lastId = FakeDatabaseContext.People.Select(x => x.IdNumber).Max();
                 p.IdNumber = ++lastId;
-                DatabaseContext.People.Add(p);
+                FakeDatabaseContext.People.Add(p);
             }
             return p;
         }
