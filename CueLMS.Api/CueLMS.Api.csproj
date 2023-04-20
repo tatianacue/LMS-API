@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <Reference Include="UWP.Library.CueLMS">
-      <HintPath>..\..\Cue.LMS\UWP.Library.CueLMS\bin\Debug\netstandard2.0\UWP.Library.CueLMS.dll</HintPath>
+      <HintPath>..\..\assignment4UWP\UWP.Library.CueLMS\bin\Debug\netstandard2.0\UWP.Library.CueLMS.dll</HintPath>
     </Reference>
   </ItemGroup>
 
