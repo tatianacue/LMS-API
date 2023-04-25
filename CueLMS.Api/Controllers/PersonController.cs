@@ -23,9 +23,9 @@ namespace CueLMS.Api.Controllers
         }
 
         [HttpPost]
-        public Person AddOrUpdate([FromBody] Person person)
+        public void AddOrUpdate([FromBody] Person person)
         {
-            return new PersonEC().AddOrUpdatePerson(person);
+            new PersonEC().AddOrUpdatePerson(person);
         }
 
     }
