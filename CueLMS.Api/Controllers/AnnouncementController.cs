@@ -15,16 +15,16 @@ namespace CueLMS.Api.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
-        public List<Announcement> GetAnnouncements()
+        [HttpGet("GetList/{id}")]
+        public List<Announcement> GetAnnouncements(int id)
         {
-            return new AnnouncementEC().GetAnnouncements();
+            return new AnnouncementEC().GetAnnouncements(id);
         }
 
         [HttpPost]
-        public Announcement AddOrUpdate([FromBody] Announcement announcement)
+        public void AddOrUpdate([FromBody] Course course)
         {
-            return new AnnouncementEC().AddOrUpdateAnnouncement(announcement);
+           new AnnouncementEC().AddOrUpdateAnnouncement(course);
         }
     }
 }
