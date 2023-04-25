@@ -26,5 +26,11 @@ namespace CueLMS.Api.Controllers
         {
             return new SpringCoursesEC().AddOrUpdateCourse(course);
         }
+
+        [HttpDelete]
+        public void Delete([FromBody] Course course)
+        {
+            //new SpringCoursesEC().DeleteCourse(Course);
+        }
     }
 }
