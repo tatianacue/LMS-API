@@ -5,24 +5,65 @@ namespace CueLMS.Api.EC
 {
     public class AnnouncementEC
     {
-        public List<Announcement> GetAnnouncements()
+        public List<Announcement> GetAnnouncements(int id)
         {
-            return FakeDatabaseContext.Announcements;
-        }
-
-        public Announcement AddOrUpdateAnnouncement(Announcement a)
-        {
-            var itemToUpdate = FakeDatabaseContext.Announcements.FirstOrDefault(x => x.Id == a.Id);
-            if (itemToUpdate != null)
+            var Course = FakeDatabaseContext.SpringCourses.FirstOrDefault(x => x.Id == id);
+            if (Course == null)
             {
-               FakeDatabaseContext.Announcements.Remove(itemToUpdate);
-               FakeDatabaseContext.Announcements.Add(a);
+                Course = FakeDatabaseContext.FallCourses.FirstOrDefault(x => x.Id == id);
+            }
+            if (Course == null)
+            {
+                Course = FakeDatabaseContext.SummerCourses.FirstOrDefault(x => x.Id == id);
+            }
+            if (Course != null)
+            {
+                return Course.Announcements;
             }
             else
             {
-               FakeDatabaseContext.Announcements.Add(a);
+                return new List<Announcement>();
             }
-            return a;
+        }
+
+        public void AddOrUpdateAnnouncement(Course c)
+        {
+            var Course = FakeDatabaseContext.SpringCourses.FirstOrDefault(x => x.Id == c.Id);
+            if (Course == null)
+            {
+                Course = FakeDatabaseContext.FallCourses.FirstOrDefault(x => x.Id == c.Id);
+            }
+            if (Course == null)
+            {
+                Course = FakeDatabaseContext.SummerCourses.FirstOrDefault(x => x.Id == c.Id);
+            }
+            if (Course != null)
+            {
+                var announcement = c.SelectedAnnouncement;
+                if (announcement.Id > 0)
+                {
+                    var itemToUpdate = Course.Announcements.FirstOrDefault(x => x.Id == announcement.Id);
+                    if (itemToUpdate != null)
+                    {
+                        Course.Announcements.Remove(itemToUpdate);
+                        Course.Announcements.Add(announcement);
+                    }
+                }
+                else
+                {
+                    int lastId;
+                    if (Course.Announcements.Count > 0)
+                    {
+                        lastId = Course.Announcements.Select(x => x.Id).Max();
+                    }
+                    else
+                    {
+                        lastId = 0;
+                    }
+                    announcement.Id = ++lastId;
+                    Course.Announcements.Add(announcement);
+                }
+            }
         }
     }
 }

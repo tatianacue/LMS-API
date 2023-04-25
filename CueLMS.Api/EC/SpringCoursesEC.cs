@@ -23,7 +23,15 @@ namespace CueLMS.Api.EC
             }
             else
             {
-                var lastId = FakeDatabaseContext.SpringCourses.Select(x => x.Id).Max();
+                int lastId;
+                if (FakeDatabaseContext.SpringCourses.Count == 0)
+                {
+                    lastId = 0;
+                }
+                else
+                {
+                    lastId = FakeDatabaseContext.SpringCourses.Select(x => x.Id).Max();
+                } 
                 c.Id = ++lastId;
                 FakeDatabaseContext.SpringCourses.Add(c);
             }
