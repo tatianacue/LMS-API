@@ -22,9 +22,9 @@ namespace CueLMS.Api.Controllers
         }
 
         [HttpPost]
-        public Course AddOrUpdate([FromBody] Course course)
+        public void AddOrUpdate([FromBody] Course course)
         {
-            return new FallCoursesEC().AddOrUpdateCourse(course);
+            new FallCoursesEC().AddOrUpdateCourse(course);
         }
     }
 }

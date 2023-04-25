@@ -10,7 +10,7 @@ namespace CueLMS.Api.EC
             return FakeDatabaseContext.FallCourses;
         }
 
-        public Course AddOrUpdateCourse(Course c)
+        public void AddOrUpdateCourse(Course c)
         {
             if (c.Id > 0)
             {
@@ -23,11 +23,18 @@ namespace CueLMS.Api.EC
             }
             else
             {
-                var lastId = FakeDatabaseContext.FallCourses.Select(x => x.Id).Max();
+                int lastId;
+                if (FakeDatabaseContext.FallCourses.Count > 0)
+                {
+                    lastId = FakeDatabaseContext.FallCourses.Select(x => x.Id).Max();
+                }
+                else
+                {
+                    lastId = 0;
+                }
                 c.Id = ++lastId;
                 FakeDatabaseContext.FallCourses.Add(c);
             }
-            return c;
         }
     }
 }

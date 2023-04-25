@@ -10,7 +10,7 @@ namespace CueLMS.Api.EC
             return FakeDatabaseContext.SpringCourses;
         }
 
-        public Course AddOrUpdateCourse(Course c)
+        public void AddOrUpdateCourse(Course c)
         {
             if (c.Id > 0)
             {
@@ -35,7 +35,6 @@ namespace CueLMS.Api.EC
                 c.Id = ++lastId;
                 FakeDatabaseContext.SpringCourses.Add(c);
             }
-            return c;
         }
     }
 }

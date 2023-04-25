@@ -10,7 +10,7 @@ namespace CueLMS.Api.EC
             return FakeDatabaseContext.People;
         }
 
-        public Person AddOrUpdatePerson(Person p)
+        public void AddOrUpdatePerson(Person p)
         {
             if (p.IdNumber > 0)
             {
@@ -20,13 +20,21 @@ namespace CueLMS.Api.EC
                     FakeDatabaseContext.People.Remove(itemToUpdate); 
                     FakeDatabaseContext.People.Add(p);
                 }
-            }else
+            }
+            else
             {
-                var lastId = FakeDatabaseContext.People.Select(x => x.IdNumber).Max();
+                int lastId;
+                if (FakeDatabaseContext.People.Count > 0)
+                {
+                    lastId = FakeDatabaseContext.People.Select(x => x.IdNumber).Max();
+                }
+                else
+                {
+                    lastId = 0;
+                }
                 p.IdNumber = ++lastId;
                 FakeDatabaseContext.People.Add(p);
             }
-            return p;
         }
     }
 }
