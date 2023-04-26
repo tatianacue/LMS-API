@@ -33,5 +33,17 @@ namespace CueLMS.Api.Controllers
             new FallCoursesEC().DeleteCourse(course);
         }
 
+        [HttpGet("GetRoster/{id}")]
+        public List<Student> GetStudents(int id)
+        {
+            return new FallCoursesEC().GetRoster(id);
+        }
+
+        [HttpPost("AddToRoster")]
+        public void RosterAdd([FromBody] Course course)
+        {
+            new FallCoursesEC().AddToRoster(course);
+        }
+
     }
 }
