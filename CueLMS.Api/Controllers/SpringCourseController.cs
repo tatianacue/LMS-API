@@ -15,22 +15,22 @@ namespace CueLMS.Api.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
+        [HttpGet("")]
         public List<Course> GetCourses()
         {
             return new SpringCoursesEC().GetCourses();
         }
 
-        [HttpPost]
+        [HttpPost("")]
         public void AddOrUpdate([FromBody] Course course)
         {
             new SpringCoursesEC().AddOrUpdateCourse(course);
         }
 
-        [HttpDelete]
+        [HttpDelete("")]
         public void Delete([FromBody] Course course)
         {
-            //new SpringCoursesEC().DeleteCourse(Course);
+            new SpringCoursesEC().DeleteCourse(course);
         }
     }
 }

@@ -16,13 +16,13 @@ namespace CueLMS.Api.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
+        [HttpGet("")]
         public List<Person> Get()
         {
             return new PersonEC().GetPeople();
         }
 
-        [HttpPost]
+        [HttpPost("")]
         public void AddOrUpdate([FromBody] Person person)
         {
             new PersonEC().AddOrUpdatePerson(person);

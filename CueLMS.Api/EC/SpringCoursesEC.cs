@@ -36,5 +36,13 @@ namespace CueLMS.Api.EC
                 FakeDatabaseContext.SpringCourses.Add(c);
             }
         }
+        public void DeleteCourse(Course c)
+        {
+            var item = FakeDatabaseContext.SpringCourses.FirstOrDefault(x => x.Id == c.Id);
+            if (item != null)
+            {
+                FakeDatabaseContext.SpringCourses.Remove(item);
+            }
+        }
     }
 }
