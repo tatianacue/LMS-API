@@ -21,7 +21,7 @@ namespace CueLMS.Api.Controllers
             return new AnnouncementEC().GetAnnouncements(id);
         }
 
-        [HttpPost]
+        [HttpPost("")]
         public void AddOrUpdate([FromBody] Course course)
         {
            new AnnouncementEC().AddOrUpdateAnnouncement(course);

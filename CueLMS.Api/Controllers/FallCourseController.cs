@@ -15,16 +15,23 @@ namespace CueLMS.Api.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
+        [HttpGet("")]
         public List<Course> GetCourses()
         {
             return new FallCoursesEC().GetCourses();
         }
 
-        [HttpPost]
+        [HttpPost("")]
         public void AddOrUpdate([FromBody] Course course)
         {
             new FallCoursesEC().AddOrUpdateCourse(course);
         }
+
+        [HttpDelete("")]
+        public void Delete([FromBody] Course course)
+        {
+            new FallCoursesEC().DeleteCourse(course);
+        }
+
     }
 }
