@@ -6,31 +6,31 @@ namespace CueLMS.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class AnnouncementController
+    public class AssignmentController
     {
-        private readonly ILogger<AnnouncementController> _logger;
+        private readonly ILogger<AssignmentController> _logger;
 
-        public AnnouncementController(ILogger<AnnouncementController> logger)
+        public AssignmentController(ILogger<AssignmentController> logger)
         {
             _logger = logger;
         }
 
         [HttpGet("GetList/{id}")]
-        public List<Announcement> GetAnnouncements(int id)
+        public List<Assignment> Get(int id)
         {
-            return new AnnouncementEC().GetAnnouncements(id);
+            return new AssignmentEC().GetAssignments(id);
         }
 
         [HttpPost("")]
         public void AddOrUpdate([FromBody] Course course)
         {
-           new AnnouncementEC().AddOrUpdateAnnouncement(course);
+            new AssignmentEC().AddOrUpdateAssignment(course);
         }
 
         [HttpDelete("")]
         public void Delete([FromBody] Course course)
         {
-            new AnnouncementEC().DeleteAnnouncement(course);
+            new AssignmentEC().DeleteAssignment(course);
         }
     }
 }

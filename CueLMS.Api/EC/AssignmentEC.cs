@@ -3,9 +3,9 @@ using UWP.Library.CueLMS.Database;
 
 namespace CueLMS.Api.EC
 {
-    public class AnnouncementEC
+    public class AssignmentEC
     {
-        public List<Announcement> GetAnnouncements(int id)
+        public List<Assignment> GetAssignments(int id)
         {
             var Course = FakeDatabaseContext.SpringCourses.FirstOrDefault(x => x.Id == id);
             if (Course == null)
@@ -18,15 +18,15 @@ namespace CueLMS.Api.EC
             }
             if (Course != null)
             {
-                return Course.Announcements;
+                return Course.Assignments;
             }
             else
             {
-                return new List<Announcement>();
+                return new List<Assignment>();
             }
         }
 
-        public void AddOrUpdateAnnouncement(Course c)
+        public void AddOrUpdateAssignment(Course c)
         {
             var Course = FakeDatabaseContext.SpringCourses.FirstOrDefault(x => x.Id == c.Id);
             if (Course == null)
@@ -39,33 +39,33 @@ namespace CueLMS.Api.EC
             }
             if (Course != null)
             {
-                var announcement = c.SelectedAnnouncement;
-                if (announcement.Id > 0)
+                var assignment = c.SelectedAssignment;
+                if (assignment.Id > 0)
                 {
-                    var itemToUpdate = Course.Announcements.FirstOrDefault(x => x.Id == announcement.Id);
+                    var itemToUpdate = Course.Assignments.FirstOrDefault(x => x.Id == assignment.Id);
                     if (itemToUpdate != null)
                     {
-                        Course.Announcements.Remove(itemToUpdate);
-                        Course.Announcements.Add(announcement);
+                        Course.Assignments.Remove(itemToUpdate);
+                        Course.Assignments.Add(assignment);
                     }
                 }
                 else
                 {
                     int lastId;
-                    if (Course.Announcements.Count > 0)
+                    if (Course.Assignments.Count > 0)
                     {
-                        lastId = Course.Announcements.Select(x => x.Id).Max();
+                        lastId = Course.Assignments.Select(x => x.Id).Max();
                     }
                     else
                     {
                         lastId = 0;
                     }
-                    announcement.Id = ++lastId;
-                    Course.Announcements.Add(announcement);
+                    assignment.Id = ++lastId;
+                    Course.Assignments.Add(assignment);
                 }
             }
         }
-        public void DeleteAnnouncement(Course c)
+        public void DeleteAssignment(Course c)
         {
             var Course = FakeDatabaseContext.SpringCourses.FirstOrDefault(x => x.Id == c.Id);
             if (Course == null)
@@ -78,11 +78,11 @@ namespace CueLMS.Api.EC
             }
             if (Course != null)
             {
-                var announcement = c.SelectedAnnouncement;
-                var item = Course.Announcements.FirstOrDefault(x => x.Id == announcement.Id);
+                var assignment = c.SelectedAssignment;
+                var item = Course.Assignments.FirstOrDefault(x => x.Id == assignment.Id);
                 if (item != null)
                 {
-                    Course.Announcements.Remove(item);
+                    Course.Assignments.Remove(item);
                 }
             }
         }
