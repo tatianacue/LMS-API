@@ -32,5 +32,17 @@ namespace CueLMS.Api.Controllers
         {
             new ModuleEC().DeleteModule(course);
         }
+
+        [HttpGet("GetContent/{id}")]
+        public List<ContentItem> GetContentItems(int id)
+        {
+            return new ModuleEC().GetContent(id);
+        }
+
+        [HttpPost("PostContent")]
+        public void PostContent(Course course)
+        {
+            new ModuleEC().AddUpdateContent(course);
+        }
     }
 }
