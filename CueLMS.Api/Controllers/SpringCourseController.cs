@@ -32,5 +32,17 @@ namespace CueLMS.Api.Controllers
         {
             new SpringCoursesEC().DeleteCourse(course);
         }
+
+        [HttpGet("GetRoster/{id}")]
+        public List<Student> GetStudents(int id)
+        {
+            return new SpringCoursesEC().GetRoster(id);
+        }
+
+        [HttpPost("AddToRoster")]
+        public void RosterAdd([FromBody] Course course)
+        {
+            new SpringCoursesEC().AddToRoster(course);
+        }
     }
 }

@@ -45,5 +45,22 @@ namespace CueLMS.Api.EC
                 FakeDatabaseContext.SpringCourses.Remove(item);
             }
         }
+        public List<Student> GetRoster(int id)
+        {
+            var course = FakeDatabaseContext.SpringCourses.FirstOrDefault(x => x.Id == id); //course that matches
+            if (course != null)
+            {
+                return course.Roster;
+            }
+            else { return new List<Student>(); }
+        }
+        public void AddToRoster(Course c)
+        {
+            var course = FakeDatabaseContext.SpringCourses.FirstOrDefault(x => x.Id == c.Id);
+            if (course != null)
+            {
+                course.Roster.Add(c.SelectedStudent);
+            }
+        }
     }
 }
