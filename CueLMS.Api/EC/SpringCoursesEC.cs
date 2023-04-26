@@ -24,16 +24,17 @@ namespace CueLMS.Api.EC
             else
             {
                 int lastId;
-                if (FakeDatabaseContext.SpringCourses.Count == 0)
+                if (FakeDatabaseContext.CourseIds.Count == 0)
                 {
                     lastId = 0;
                 }
                 else
                 {
-                    lastId = FakeDatabaseContext.SpringCourses.Select(x => x.Id).Max();
+                    lastId = FakeDatabaseContext.CourseIds.Max();
                 } 
                 c.Id = ++lastId;
                 FakeDatabaseContext.SpringCourses.Add(c);
+                FakeDatabaseContext.CourseIds.Add(c.Id); //adds to course id database
             }
         }
         public void DeleteCourse(Course c)

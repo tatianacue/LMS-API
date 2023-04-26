@@ -24,8 +24,8 @@ namespace CueLMS.Api.EC
             else
             {
                 int lastId;
-                if (FakeDatabaseContext.SummerCourses.Count > 0) {
-                    lastId = FakeDatabaseContext.SummerCourses.Select(x => x.Id).Max();
+                if (FakeDatabaseContext.CourseIds.Count > 0) {
+                    lastId = FakeDatabaseContext.CourseIds.Max();
                 }
                 else
                 {
@@ -33,6 +33,7 @@ namespace CueLMS.Api.EC
                 }
                 c.Id = ++lastId;
                 FakeDatabaseContext.SummerCourses.Add(c);
+                FakeDatabaseContext.CourseIds.Add(c.Id); // adds to course id database
             }
         }
         public void DeleteCourse(Course c)
