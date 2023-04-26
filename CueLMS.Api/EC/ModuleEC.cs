@@ -52,9 +52,9 @@ namespace CueLMS.Api.EC
                 else
                 {
                     int lastId;
-                    if (Course.Modules.Count > 0)
+                    if (FakeDatabaseContext.ModuleIds.Count > 0) //so module ids are unique
                     {
-                        lastId = Course.Modules.Select(x => x.Id).Max();
+                        lastId = FakeDatabaseContext.ModuleIds.Max();
                     }
                     else
                     {
@@ -62,6 +62,7 @@ namespace CueLMS.Api.EC
                     }
                     Module.Id = ++lastId;
                     Course.Modules.Add(Module);
+                    FakeDatabaseContext.ModuleIds.Add(Module.Id);
                 }
             }
         }
@@ -83,6 +84,102 @@ namespace CueLMS.Api.EC
                 if (item != null)
                 {
                     Course.Modules.Remove(item);
+                }
+            }
+        }
+        public List<ContentItem> GetContent(int id)
+        {
+            Module getfrom = new Module();
+            int found = 0;
+            foreach (var course in FakeDatabaseContext.SpringCourses) //fix this
+            {
+                foreach (var module in course.Modules)
+                {
+                    if (module.Id == id)
+                    {
+                        getfrom = module;
+                        found = 1; break;
+                    }
+                }
+            }
+            if (found == 0)
+            {
+                foreach (var course in FakeDatabaseContext.SummerCourses)
+                {
+                    foreach (var module in course.Modules)
+                    {
+                        if (module.Id == id)
+                        {
+                            getfrom = module;
+                            found = 1; break;
+                        }
+                    }
+                }
+            }
+            if (found == 0)
+            {
+                foreach (var course in FakeDatabaseContext.FallCourses)
+                {
+                    foreach (var module in course.Modules)
+                    {
+                        if (module.Id == id)
+                        {
+                            getfrom = module;
+                            found = 1; break;
+                        }
+                    }
+                }
+            }
+            if (found == 1)
+            {
+                return getfrom.Content;
+            }
+            else
+            {
+                return new List<ContentItem>();
+            }
+        }
+        public void AddUpdateContent(Course c)
+        {
+            var selectedmodule = c.SelectedModule;
+            var item = c.SelectedItem;
+            var Course = FakeDatabaseContext.SpringCourses.FirstOrDefault(x => x.Id == c.Id);
+            if (Course == null)
+            {
+                Course = FakeDatabaseContext.FallCourses.FirstOrDefault(x => x.Id == c.Id);
+            }
+            if (Course == null)
+            {
+                Course = FakeDatabaseContext.SummerCourses.FirstOrDefault(x => x.Id == c.Id);
+            }
+            if (Course != null)
+            {
+                var module = Course.Modules.FirstOrDefault(x => x.Id == selectedmodule.Id);
+                if (module != null)
+                {
+                    if (item.Id > 0)
+                    {
+                        var olditem = module.Content.FirstOrDefault(x => x.Id == item.Id);
+                        if (olditem != null)
+                        {
+                            module.Content.Remove(olditem);
+                            module.Content.Add(item);
+                        }
+                    }
+                    else
+                    {
+                        int lastId;
+                        if (module.Content.Count > 0)
+                        {
+                            lastId = module.Content.Select(x => x.Id).Max();
+                        }
+                        else
+                        {
+                            lastId = 0;
+                        }
+                        item.Id = ++lastId;
+                        module.Content.Add(item);
+                    }
                 }
             }
         }
