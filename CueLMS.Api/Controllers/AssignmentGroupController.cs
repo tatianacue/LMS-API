@@ -21,12 +21,6 @@ namespace CueLMS.Api.Controllers
             return new AssignmentGroupEC().GetGroups(id);
         }
 
-        [HttpGet("GetAssignments/{id}")]
-        public List<Assignment> GetAssignmentList(int id)
-        {
-            return new AssignmentGroupEC().GetAssignments(id);
-        }
-
         [HttpPost("")]
         public void AddOrUpdateGroup(Course course)
         {

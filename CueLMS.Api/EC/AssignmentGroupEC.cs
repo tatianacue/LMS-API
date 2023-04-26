@@ -6,32 +6,6 @@ namespace CueLMS.Api.EC
 {
     public class AssignmentGroupEC
     {
-        public List<Assignment> GetAssignments(int id)
-        {
-            var Course = FakeDatabaseContext.SpringCourses.FirstOrDefault(x => x.Id == id);
-            if (Course == null)
-            {
-                Course = FakeDatabaseContext.FallCourses.FirstOrDefault(x => x.Id == id);
-            }
-            if (Course == null)
-            {
-                Course = FakeDatabaseContext.SummerCourses.FirstOrDefault(x => x.Id == id);
-            }
-            if (Course != null)
-            {
-                var g = Course.SelectedAssignmentGroup; //make sure to set selected group before calling this
-                var group = Course.AssignmentGroups.FirstOrDefault(x => x.Id == g.Id);
-                if (group != null)
-                {
-                    return group.Group;
-                }
-                else
-                {
-                    return new List<Assignment>();
-                }
-            }
-            else { return new List<Assignment>(); }
-        }
         public List<AssignmentGroup> GetGroups(int id)
         {
             var Course = FakeDatabaseContext.SpringCourses.FirstOrDefault(x => x.Id == id);
