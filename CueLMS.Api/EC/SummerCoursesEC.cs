@@ -61,5 +61,18 @@ namespace CueLMS.Api.EC
                 course.Roster.Add(c.SelectedStudent);
             }
         }
+        public void RemoveFromRoster(Course c)
+        {
+            var course = FakeDatabaseContext.SummerCourses.FirstOrDefault(x => x.Id == c.Id);
+            if (course != null)
+            {
+                var selected = c.SelectedStudent;
+                var student = course.Roster.FirstOrDefault(x => x.IdNumber == selected.IdNumber);
+                if (student != null)
+                {
+                    course.Roster.Remove(student);
+                }
+            }
+        }
     }
 }

@@ -44,5 +44,11 @@ namespace CueLMS.Api.Controllers
         {
             new SpringCoursesEC().AddToRoster(course);
         }
+
+        [HttpDelete("RemoveFromRoster")]
+        public void RosterRemove([FromBody] Course course)
+        {
+            new SpringCoursesEC().RemoveFromRoster(course);
+        }
     }
 }
