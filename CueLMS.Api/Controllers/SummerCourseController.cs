@@ -44,5 +44,11 @@ namespace CueLMS.Api.Controllers
         {
             new SummerCoursesEC().AddToRoster(course);
         }
+
+        [HttpDelete("RemoveFromRoster")]
+        public void RosterRemove([FromBody] Course course)
+        {
+            new SummerCoursesEC().RemoveFromRoster(course);
+        }
     }
 }
