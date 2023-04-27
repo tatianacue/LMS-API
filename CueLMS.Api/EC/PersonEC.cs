@@ -5,35 +5,98 @@ namespace CueLMS.Api.EC
 {
     public class PersonEC
     {
-        public List<Person> GetPeople()
+        public List<Student> GetStudents()
         {
-            return FakeDatabaseContext.People;
+            return FakeDatabaseContext.Students;
+        }
+        public List<TeachingAssistant> GetTeachingAssistants()
+        {
+            return FakeDatabaseContext.TeachingAssistants;
+        }
+        public List<Instructor> GetInstructors()
+        {
+            return FakeDatabaseContext.Instructors;
         }
 
-        public void AddOrUpdatePerson(Person p)
+        public void AddOrUpdateStudent(Student p)
         {
             if (p.IdNumber > 0)
             {
-                var itemToUpdate = FakeDatabaseContext.People.FirstOrDefault(x => x.IdNumber == p.IdNumber);
+                var itemToUpdate = FakeDatabaseContext.Students.FirstOrDefault(x => x.IdNumber == p.IdNumber);
                 if (itemToUpdate != null) 
                 {
-                    FakeDatabaseContext.People.Remove(itemToUpdate); 
-                    FakeDatabaseContext.People.Add(p);
+                    FakeDatabaseContext.Students.Remove(itemToUpdate); 
+                    FakeDatabaseContext.Students.Add(p);
                 }
             }
             else
             {
                 int lastId;
-                if (FakeDatabaseContext.People.Count > 0)
+                if (FakeDatabaseContext.PersonIds.Count > 0)
                 {
-                    lastId = FakeDatabaseContext.People.Select(x => x.IdNumber).Max();
+                    lastId = FakeDatabaseContext.PersonIds.Max();
                 }
                 else
                 {
                     lastId = 0;
                 }
                 p.IdNumber = ++lastId;
-                FakeDatabaseContext.People.Add(p);
+                FakeDatabaseContext.Students.Add(p);
+                FakeDatabaseContext.PersonIds.Add(p.IdNumber);
+            }
+        }
+        public void AddOrUpdateTA(TeachingAssistant p)
+        {
+            if (p.IdNumber > 0)
+            {
+                var itemToUpdate = FakeDatabaseContext.TeachingAssistants.FirstOrDefault(x => x.IdNumber == p.IdNumber);
+                if (itemToUpdate != null)
+                {
+                    FakeDatabaseContext.TeachingAssistants.Remove(itemToUpdate);
+                    FakeDatabaseContext.TeachingAssistants.Add(p);
+                }
+            }
+            else
+            {
+                int lastId;
+                if (FakeDatabaseContext.PersonIds.Count > 0)
+                {
+                    lastId = FakeDatabaseContext.PersonIds.Max();
+                }
+                else
+                {
+                    lastId = 0;
+                }
+                p.IdNumber = ++lastId;
+                FakeDatabaseContext.TeachingAssistants.Add(p);
+                FakeDatabaseContext.PersonIds.Add(p.IdNumber);
+            }
+        }
+        public void AddOrUpdateInstructor(Instructor p)
+        {
+            if (p.IdNumber > 0)
+            {
+                var itemToUpdate = FakeDatabaseContext.Instructors.FirstOrDefault(x => x.IdNumber == p.IdNumber);
+                if (itemToUpdate != null)
+                {
+                    FakeDatabaseContext.Instructors.Remove(itemToUpdate);
+                    FakeDatabaseContext.Instructors.Add(p);
+                }
+            }
+            else
+            {
+                int lastId;
+                if (FakeDatabaseContext.PersonIds.Count > 0)
+                {
+                    lastId = FakeDatabaseContext.PersonIds.Max();
+                }
+                else
+                {
+                    lastId = 0;
+                }
+                p.IdNumber = ++lastId;
+                FakeDatabaseContext.Instructors.Add(p);
+                FakeDatabaseContext.PersonIds.Add(p.IdNumber);
             }
         }
     }
