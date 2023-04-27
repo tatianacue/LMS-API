@@ -183,5 +183,28 @@ namespace CueLMS.Api.EC
                 }
             }
         }
+        public void RemoveContent(Course c)
+        {
+            var selectedmodule = c.SelectedModule;
+            var item = c.SelectedItem;
+            var Course = FakeDatabaseContext.SpringCourses.FirstOrDefault(x => x.Id == c.Id);
+            if (Course == null)
+            {
+                Course = FakeDatabaseContext.FallCourses.FirstOrDefault(x => x.Id == c.Id);
+            }
+            if (Course == null)
+            {
+                Course = FakeDatabaseContext.SummerCourses.FirstOrDefault(x => x.Id == c.Id);
+            }
+            if (Course != null) 
+            {
+                var module = Course.Modules.FirstOrDefault(x => x.Id == selectedmodule.Id); //module in database
+                if (module != null)
+                {
+                    var removable = module.Content.FirstOrDefault(x => x.Id == item.Id); //actual item needed to be removed
+                    module.Content.Remove(removable);
+                }
+            }
+        }
     }
 }

@@ -44,5 +44,11 @@ namespace CueLMS.Api.Controllers
         {
             new ModuleEC().AddUpdateContent(course);
         }
+
+        [HttpDelete("DeleteContent")]
+        public void DeleteContent(Course course)
+        {
+            new ModuleEC().RemoveContent(course);
+        }
     }
 }
