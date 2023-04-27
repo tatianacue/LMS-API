@@ -1,5 +1,6 @@
 ﻿using CueLMS.Api.EC;
 using Library.LMS.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using UWP.Library.CueLMS.Database;
 
@@ -16,16 +17,40 @@ namespace CueLMS.Api.Controllers
             _logger = logger;
         }
 
-        [HttpGet("")]
-        public List<Person> Get()
+        [HttpGet("GetStudents")]
+        public List<Student> GetStudentList()
         {
-            return new PersonEC().GetPeople();
+            return new PersonEC().GetStudents();
         }
 
-        [HttpPost("")]
-        public void AddOrUpdate([FromBody] Person person)
+        [HttpGet("GetInstructors")]
+        public List<Instructor> GetInstructorList()
         {
-            new PersonEC().AddOrUpdatePerson(person);
+            return new PersonEC().GetInstructors();
+        }
+
+        [HttpGet("GetTeachingAssistants")]
+        public List<TeachingAssistant> GetTAList()
+        {
+            return new PersonEC().GetTeachingAssistants();
+        }
+
+        [HttpPost("AddUpdateStudent")]
+        public void AddOrUpdateS([FromBody] Student person)
+        {
+            new PersonEC().AddOrUpdateStudent(person);
+        }
+
+        [HttpPost("AddUpdateTA")]
+        public void AddOrUpdateT([FromBody] TeachingAssistant person)
+        {
+            new PersonEC().AddOrUpdateTA(person);
+        }
+
+        [HttpPost("AddUpdateInstructor")]
+        public void AddOrUpdateI([FromBody] Instructor person)
+        {
+            new PersonEC().AddOrUpdateInstructor(person);
         }
 
     }
