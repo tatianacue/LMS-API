@@ -87,7 +87,7 @@ namespace CueLMS.Api.EC
                 }
             }
         }
-        public List<ContentItem> GetContent(int id)
+        public List<FileItem> GetFileItems(int id)
         {
             Module getfrom = new Module();
             int found = 0;
@@ -132,17 +132,121 @@ namespace CueLMS.Api.EC
             }
             if (found == 1)
             {
-                return getfrom.Content;
+                return getfrom.FileItems;
             }
             else
             {
-                return new List<ContentItem>();
+                return new List<FileItem>();
             }
         }
-        public void AddUpdateContent(Course c)
+        public List<PageItem> GetPageItems(int id)
+        {
+            Module getfrom = new Module();
+            int found = 0;
+            foreach (var course in FakeDatabaseContext.SpringCourses) //fix this
+            {
+                foreach (var module in course.Modules)
+                {
+                    if (module.Id == id)
+                    {
+                        getfrom = module;
+                        found = 1; break;
+                    }
+                }
+            }
+            if (found == 0)
+            {
+                foreach (var course in FakeDatabaseContext.SummerCourses)
+                {
+                    foreach (var module in course.Modules)
+                    {
+                        if (module.Id == id)
+                        {
+                            getfrom = module;
+                            found = 1; break;
+                        }
+                    }
+                }
+            }
+            if (found == 0)
+            {
+                foreach (var course in FakeDatabaseContext.FallCourses)
+                {
+                    foreach (var module in course.Modules)
+                    {
+                        if (module.Id == id)
+                        {
+                            getfrom = module;
+                            found = 1; break;
+                        }
+                    }
+                }
+            }
+            if (found == 1)
+            {
+                return getfrom.PageItems;
+            }
+            else
+            {
+                return new List<PageItem>();
+            }
+        }
+        public List<AssignmentItem> GetAssignmentItems(int id)
+        {
+            Module getfrom = new Module();
+            int found = 0;
+            foreach (var course in FakeDatabaseContext.SpringCourses) //fix this
+            {
+                foreach (var module in course.Modules)
+                {
+                    if (module.Id == id)
+                    {
+                        getfrom = module;
+                        found = 1; break;
+                    }
+                }
+            }
+            if (found == 0)
+            {
+                foreach (var course in FakeDatabaseContext.SummerCourses)
+                {
+                    foreach (var module in course.Modules)
+                    {
+                        if (module.Id == id)
+                        {
+                            getfrom = module;
+                            found = 1; break;
+                        }
+                    }
+                }
+            }
+            if (found == 0)
+            {
+                foreach (var course in FakeDatabaseContext.FallCourses)
+                {
+                    foreach (var module in course.Modules)
+                    {
+                        if (module.Id == id)
+                        {
+                            getfrom = module;
+                            found = 1; break;
+                        }
+                    }
+                }
+            }
+            if (found == 1)
+            {
+                return getfrom.AssignmentItems;
+            }
+            else
+            {
+                return new List<AssignmentItem>();
+            }
+        }
+        public void AddUpdateFileItem(Course c)
         {
             var selectedmodule = c.SelectedModule;
-            var item = c.SelectedItem;
+            var item = c.SelectedFileItem;
             var Course = FakeDatabaseContext.SpringCourses.FirstOrDefault(x => x.Id == c.Id);
             if (Course == null)
             {
@@ -159,31 +263,122 @@ namespace CueLMS.Api.EC
                 {
                     if (item.Id > 0)
                     {
-                        var olditem = module.Content.FirstOrDefault(x => x.Id == item.Id);
+                        var olditem = module.FileItems.FirstOrDefault(x => x.Id == item.Id);
                         if (olditem != null)
                         {
-                            module.Content.Remove(olditem);
-                            module.Content.Add(item);
+                            module.FileItems.Remove(olditem);
+                            module.FileItems.Add(item);
                         }
                     }
                     else
                     {
                         int lastId;
-                        if (module.Content.Count > 0)
+                        if (FakeDatabaseContext.ContentItemIds.Count > 0)
                         {
-                            lastId = module.Content.Select(x => x.Id).Max();
+                            lastId = FakeDatabaseContext.ContentItemIds.Max();
                         }
                         else
                         {
                             lastId = 0;
                         }
                         item.Id = ++lastId;
-                        module.Content.Add(item);
+                        module.FileItems.Add(item);
+                        FakeDatabaseContext.ContentItemIds.Add(item.Id);
                     }
                 }
             }
         }
-        public void RemoveContent(Course c)
+        public void AddUpdatePageItem(Course c)
+        {
+            var selectedmodule = c.SelectedModule;
+            var item = c.SelectedPageItem;
+            var Course = FakeDatabaseContext.SpringCourses.FirstOrDefault(x => x.Id == c.Id);
+            if (Course == null)
+            {
+                Course = FakeDatabaseContext.FallCourses.FirstOrDefault(x => x.Id == c.Id);
+            }
+            if (Course == null)
+            {
+                Course = FakeDatabaseContext.SummerCourses.FirstOrDefault(x => x.Id == c.Id);
+            }
+            if (Course != null)
+            {
+                var module = Course.Modules.FirstOrDefault(x => x.Id == selectedmodule.Id);
+                if (module != null)
+                {
+                    if (item.Id > 0)
+                    {
+                        var olditem = module.PageItems.FirstOrDefault(x => x.Id == item.Id);
+                        if (olditem != null)
+                        {
+                            module.PageItems.Remove(olditem);
+                            module.PageItems.Add(item);
+                        }
+                    }
+                    else
+                    {
+                        int lastId;
+                        if (FakeDatabaseContext.ContentItemIds.Count > 0)
+                        {
+                            lastId = FakeDatabaseContext.ContentItemIds.Max();
+                        }
+                        else
+                        {
+                            lastId = 0;
+                        }
+                        item.Id = ++lastId;
+                        module.PageItems.Add(item);
+                        FakeDatabaseContext.ContentItemIds.Add(item.Id);
+                    }
+                }
+            }
+        }
+        public void AddUpdateAssignmentItem(Course c)
+        {
+            var selectedmodule = c.SelectedModule;
+            var item = c.SelectedAssignmentItem;
+            var Course = FakeDatabaseContext.SpringCourses.FirstOrDefault(x => x.Id == c.Id);
+            if (Course == null)
+            {
+                Course = FakeDatabaseContext.FallCourses.FirstOrDefault(x => x.Id == c.Id);
+            }
+            if (Course == null)
+            {
+                Course = FakeDatabaseContext.SummerCourses.FirstOrDefault(x => x.Id == c.Id);
+            }
+            if (Course != null)
+            {
+                var module = Course.Modules.FirstOrDefault(x => x.Id == selectedmodule.Id);
+                if (module != null)
+                {
+                    if (item.Id > 0)
+                    {
+                        var olditem = module.AssignmentItems.FirstOrDefault(x => x.Id == item.Id);
+                        if (olditem != null)
+                        {
+                            module.AssignmentItems.Remove(olditem);
+                            module.AssignmentItems.Add(item);
+                        }
+                    }
+                    else
+                    {
+                        int lastId;
+                        if (FakeDatabaseContext.ContentItemIds.Count > 0)
+                        {
+                            lastId = FakeDatabaseContext.ContentItemIds.Max();
+                        }
+                        else
+                        {
+                            lastId = 0;
+                        }
+                        item.Id = ++lastId;
+                        module.AssignmentItems.Add(item);
+                        FakeDatabaseContext.ContentItemIds.Add(item.Id);
+                    }
+                }
+            }
+        }
+        public void RemoveFileItem(Course c)
         {
             var selectedmodule = c.SelectedModule;
             var item = c.SelectedItem;
@@ -201,8 +396,54 @@ namespace CueLMS.Api.EC
                 var module = Course.Modules.FirstOrDefault(x => x.Id == selectedmodule.Id); //module in database
                 if (module != null)
                 {
-                    var removable = module.Content.FirstOrDefault(x => x.Id == item.Id); //actual item needed to be removed
-                    module.Content.Remove(removable);
+                    var removable = module.FileItems.FirstOrDefault(x => x.Id == item.Id); //actual item needed to be removed
+                    module.FileItems.Remove(removable);
+                }
+            }
+        }
+        public void RemovePageItem(Course c)
+        {
+            var selectedmodule = c.SelectedModule;
+            var item = c.SelectedItem;
+            var Course = FakeDatabaseContext.SpringCourses.FirstOrDefault(x => x.Id == c.Id);
+            if (Course == null)
+            {
+                Course = FakeDatabaseContext.FallCourses.FirstOrDefault(x => x.Id == c.Id);
+            }
+            if (Course == null)
+            {
+                Course = FakeDatabaseContext.SummerCourses.FirstOrDefault(x => x.Id == c.Id);
+            }
+            if (Course != null)
+            {
+                var module = Course.Modules.FirstOrDefault(x => x.Id == selectedmodule.Id); //module in database
+                if (module != null)
+                {
+                    var removable = module.PageItems.FirstOrDefault(x => x.Id == item.Id); //actual item needed to be removed
+                    module.PageItems.Remove(removable);
+                }
+            }
+        }
+        public void RemoveAssignmentItem(Course c)
+        {
+            var selectedmodule = c.SelectedModule;
+            var item = c.SelectedItem;
+            var Course = FakeDatabaseContext.SpringCourses.FirstOrDefault(x => x.Id == c.Id);
+            if (Course == null)
+            {
+                Course = FakeDatabaseContext.FallCourses.FirstOrDefault(x => x.Id == c.Id);
+            }
+            if (Course == null)
+            {
+                Course = FakeDatabaseContext.SummerCourses.FirstOrDefault(x => x.Id == c.Id);
+            }
+            if (Course != null)
+            {
+                var module = Course.Modules.FirstOrDefault(x => x.Id == selectedmodule.Id); //module in database
+                if (module != null)
+                {
+                    var removable = module.AssignmentItems.FirstOrDefault(x => x.Id == item.Id); //actual item needed to be removed
+                    module.AssignmentItems.Remove(removable);
                 }
             }
         }

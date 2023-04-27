@@ -33,22 +33,58 @@ namespace CueLMS.Api.Controllers
             new ModuleEC().DeleteModule(course);
         }
 
-        [HttpGet("GetContent/{id}")]
-        public List<ContentItem> GetContentItems(int id)
+        [HttpGet("GetFileItems/{id}")]
+        public List<FileItem> GetFI(int id)
         {
-            return new ModuleEC().GetContent(id);
+            return new ModuleEC().GetFileItems(id);
         }
 
-        [HttpPost("PostContent")]
-        public void PostContent(Course course)
+        [HttpGet("GetPageItems/{id}")]
+        public List<PageItem> GetPI(int id)
         {
-            new ModuleEC().AddUpdateContent(course);
+            return new ModuleEC().GetPageItems(id);
         }
 
-        [HttpDelete("DeleteContent")]
-        public void DeleteContent(Course course)
+        [HttpGet("GetAssignmentItems/{id}")]
+        public List<AssignmentItem> GetAI(int id)
         {
-            new ModuleEC().RemoveContent(course);
+            return new ModuleEC().GetAssignmentItems(id);
+        }
+
+        [HttpPost("AddUpdateFileItem")]
+        public void PostFile(Course course)
+        {
+            new ModuleEC().AddUpdateFileItem(course);
+        }
+
+        [HttpPost("AddUpdatePageItem")]
+        public void PostPage(Course course)
+        {
+            new ModuleEC().AddUpdatePageItem(course);
+        }
+
+        [HttpPost("AddUpdateAssignmentItem")]
+        public void PostAssignment(Course course)
+        {
+            new ModuleEC().AddUpdateAssignmentItem(course);
+        }
+
+        [HttpDelete("DeleteFileItem")]
+        public void DeleteFileItem(Course course)
+        {
+            new ModuleEC().RemoveFileItem(course);
+        }
+
+        [HttpDelete("DeletePageItem")]
+        public void DeletePageItem(Course course)
+        {
+            new ModuleEC().RemovePageItem(course);
+        }
+
+        [HttpDelete("DeleteAssignmentItem")]
+        public void DeleteAssignmentItem(Course course)
+        {
+            new ModuleEC().RemoveAssignmentItem(course);
         }
     }
 }
