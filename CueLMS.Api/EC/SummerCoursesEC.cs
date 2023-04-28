@@ -1,6 +1,6 @@
 ﻿using Library.LMS.Models;
 using UWP.Library.CueLMS.Database;
-
+/* Tatiana Graciela Cue COP4870-0001*/
 namespace CueLMS.Api.EC
 {
     public class SummerCoursesEC

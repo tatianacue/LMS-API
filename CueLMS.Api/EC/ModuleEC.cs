@@ -1,6 +1,6 @@
 ﻿using Library.LMS.Models;
 using UWP.Library.CueLMS.Database;
-
+/* Tatiana Graciela Cue COP4870-0001*/
 namespace CueLMS.Api.EC
 {
     public class ModuleEC
@@ -25,7 +25,6 @@ namespace CueLMS.Api.EC
                 return new List<Module>();
             }
         }
-
         public void AddOrUpdateModule(Course c)
         {
             var Course = FakeDatabaseContext.SpringCourses.FirstOrDefault(x => x.Id == c.Id);

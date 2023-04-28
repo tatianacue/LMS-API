@@ -1,7 +1,7 @@
 ﻿using Library.LMS.Models;
 using Library.LMS.Models.Grading;
 using UWP.Library.CueLMS.Database;
-
+/* Tatiana Graciela Cue COP4870-0001*/
 namespace CueLMS.Api.EC
 {
     public class AssignmentGroupEC
