@@ -99,5 +99,40 @@ namespace CueLMS.Api.EC
                 FakeDatabaseContext.PersonIds.Add(p.IdNumber);
             }
         }
+        public Dictionary<Course, double> GetStudentGrades(int id)
+        {
+           var student = FakeDatabaseContext.Students.FirstOrDefault(x => x.IdNumber == id);
+            if (student != null)
+            {
+                return student.Grades;
+            }
+            else
+            {
+                return new Dictionary<Course, double>();
+            }
+        }
+
+        public void AddOrUpdateGrade(Student student)
+        {
+            var c = student.TempCourse;
+            var g = student.TempGrade;
+            var updateStudent = FakeDatabaseContext.Students.FirstOrDefault(x => x.IdNumber == student.IdNumber);
+            if (updateStudent != null)
+            {
+                var course = FakeDatabaseContext.SpringCourses.FirstOrDefault(x => x.Id == c.Id);
+                if (course == null) 
+                {
+                    course = FakeDatabaseContext.SummerCourses.FirstOrDefault(x => x.Id == c.Id);
+                }
+                if (course == null)
+                {
+                    course = FakeDatabaseContext.FallCourses.FirstOrDefault(x => x.Id == c.Id);
+                }
+                if (course != null)
+                {
+                    updateStudent.Grades[course] = g; //sets course and grade
+                }
+            }
+        }
     }
 }

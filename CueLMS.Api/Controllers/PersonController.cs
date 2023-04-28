@@ -53,5 +53,17 @@ namespace CueLMS.Api.Controllers
             new PersonEC().AddOrUpdateInstructor(person);
         }
 
+        [HttpGet("GetStudentGrades/{id}")]
+        public Dictionary<Course, double> GetGrades(int id)
+        {
+            return new PersonEC().GetStudentGrades(id);
+        }
+
+        [HttpPost("AddStudentGrade")]
+        public void AddGrade(Student student)
+        {
+            new PersonEC().AddOrUpdateGrade(student);
+        }
+
     }
 }
