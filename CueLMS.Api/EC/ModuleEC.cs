@@ -91,7 +91,7 @@ namespace CueLMS.Api.EC
         {
             Module getfrom = new Module();
             int found = 0;
-            foreach (var course in FakeDatabaseContext.SpringCourses) //fix this
+            foreach (var course in FakeDatabaseContext.SpringCourses)
             {
                 foreach (var module in course.Modules)
                 {
@@ -143,7 +143,7 @@ namespace CueLMS.Api.EC
         {
             Module getfrom = new Module();
             int found = 0;
-            foreach (var course in FakeDatabaseContext.SpringCourses) //fix this
+            foreach (var course in FakeDatabaseContext.SpringCourses)
             {
                 foreach (var module in course.Modules)
                 {
@@ -195,7 +195,7 @@ namespace CueLMS.Api.EC
         {
             Module getfrom = new Module();
             int found = 0;
-            foreach (var course in FakeDatabaseContext.SpringCourses) //fix this
+            foreach (var course in FakeDatabaseContext.SpringCourses)
             {
                 foreach (var module in course.Modules)
                 {
